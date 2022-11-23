@@ -1,0 +1,138 @@
+<p>list-estudiante works!</p>
+
+
+<div class="container">
+    <div class="card">
+      <h3 class="text-center">Lista de Estudiantes</h3>
+      <div class="card-body">
+      <div class="form-group form-inline">
+        Buscar por Nombre:
+        <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="searchTerm" 
+        (input)="search($event.target.value)" />
+      </div>
+        <table class="table table-striped">
+          <thead>
+            <th>ID</th>
+            <th>NOMBRE</th>
+            <th>APELLIDO</th>
+            <th></th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of estudianteSet; let i = index " >
+              <td>{{item.id}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.apellido}}</td>
+              <td>
+                <button class="btn btn-info btn-sm"    
+                (click)="triggerModal(modalData, item)">
+                  Editar </button>
+                  &nbsp;
+                <button class='btn btn-danger btn-sm' (click)="deleteEstudiante(item.id)" >
+                  Borrar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+    </div>
+  </div>
+  
+  
+  <ng-template #modalData let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Editar Estudiante</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+  
+      <div style="width: 400px; margin: auto;">
+        <div class="submit-form">
+            <div class="form-group">
+              <label for="isbn">ID</label>
+              <input
+                disabled
+                type="text"
+                class="form-control"
+                id="id"
+                required
+                [(ngModel)]="currentEstudiante.id"
+                name="id"
+              />
+            </div>
+            <div class="form-group">
+              <label for="name">NOMBRE</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                required
+                [(ngModel)]="currentEstudiante.name"
+                name="name"
+              />
+            </div>
+            <div class="form-group">
+                <label for="apellido">APELLIDO</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="apellido"
+                  required
+                  [(ngModel)]="currentEstudiante.apellido"
+                  name="apellido"
+                />
+            </div>
+          </div>
+      </div>
+    
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" 
+      
+      (click)="updateEstudiante()"
+      
+      (click)="modal.close('Save click')">Guardar</button>
+    </div>
+  </ng-template>
+  
+  <hr>
+  
+  <div class="row">
+    <div class="col-md-3">
+      <h4>Lista Estudiantes</h4>
+      <ul class="list-group">
+        <li 
+          class="list-group-item" 
+          *ngFor="let estudianteId of estudianteSet; let i = index" 
+          [class.active]="i == currentIndex"
+          (click)="setActiveEstudiante(estudianteId, i)">
+          <div class="col">{{ estudianteId.name }}</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <hr>
+  
+  <div class="card-text">
+    <form #f="ngForm" class="form-inline">
+      <div class="form-group">
+        <label for="isbn">ID:</label>
+        <input [(ngModel)]="idestudiante" id="name" name="name" class="form-control ml-2 mr-2">
+      </div>
+      <button (click)="retrieveEstudiante(idestudiante)" [disabled]="!f?.valid" class="btn btn-primary">Buscar</button>
+    </form>
+      <div class="col-md-6">
+    <div *ngIf="currentEstudiante" >
+      <div>
+        <label><strong>ID:</strong></label> {{ currentEstudiante.id }}
+        <label><strong>NOMBRE:</strong></label> {{ currentEstudiante.name }}
+        <label><strong>APELLIDO:</strong></label> {{ currentEstudiante.apellido }}
+      </div>
+    </div>
+    <label><strong></strong></label> {{ msgError }}
+  </div>
+  </div>
+  

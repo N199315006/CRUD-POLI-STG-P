@@ -1,0 +1,58 @@
+<p>add-alumno works!</p>
+<form>
+
+    <div style="width: 400px; margin: auto;">
+        <div class="submit-form">
+          <div *ngIf="!submitted">
+            <div class="form-group">
+              <label for="isbn">ID</label>
+              <input
+                type="text"
+                (keypress)="($event.charCode >= 48 && $event.charCode < 58)" 
+                class="form-control"
+                id="id"
+                required
+                [(ngModel)]="estudiante.id"
+                (focusout)="existsPK(estudiante.id)"
+                name="id"
+              />
+            </div>
+            
+          
+            <div class="form-group">
+              <label for="name">NOMBRE</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                [(ngModel)]="estudiante.name"
+                name="name"
+                required
+              />
+            </div>
+      
+            <div class="form-group">
+                <label for="apellido">APELLIDO</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="apellido"
+                  [(ngModel)]="estudiante.apellido"
+                  name="apellido"
+                  required
+                />
+              </div>
+              
+            <button [disabled]="isDisabled" (click)="saveEstudiante()" class="btn btn-success">Enviar</button>
+          </div>
+          
+          <div *ngIf="submitted">
+            <h4>You submitted successfully!</h4>
+      
+            <button class="btn btn-success" (click)="newEstudiante()">Agregar</button>
+          </div>
+          
+        </div> 
+      </div>
+      {{msgError}}
+    </form>

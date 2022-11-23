@@ -1,0 +1,137 @@
+<p>list-program works!</p>
+
+<div class="container">
+    <div class="card">
+      <h3 class="text-center">Lista de Programas</h3>
+      <div class="card-body">
+      <div class="form-group form-inline">
+        Buscar por Nombre:
+        <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="searchTerm" 
+        (input)="search($event.target.value)" />
+      </div>
+        <table class="table table-striped">
+          <thead>
+            <th>CODIGO</th>
+            <th>ESCUELA</th>
+            <th>TIPO DE PROGRAMA</th>
+            <th></th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of programaSet; let i = index " >
+              <td>{{item.codigo}}</td>
+              <td>{{item.escuela}}</td>
+              <td>{{item.tPrograma}}</td>
+              <td>
+                <button class="btn btn-info btn-sm"    
+                (click)="triggerModal(modalData, item)">
+                  Editar </button>
+                  &nbsp;
+                <button class='btn btn-danger btn-sm' (click)="deletePrograma(item.id)" >
+                  Borrar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+    </div>
+  </div>
+  
+  
+  <ng-template #modalData let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Editar Programa</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+  
+      <div style="width: 400px; margin: auto;">
+        <div class="submit-form">
+            <div class="form-group">
+              <label for="codigo">CODIGO</label>
+              <input
+                disabled
+                type="text"
+                class="form-control"
+                id="codigo"
+                required
+                [(ngModel)]="currentPrograma.codigo"
+                name="codigo"
+              />
+            </div>
+            <div class="form-group">
+              <label for="escuela">ESCUELA</label>
+              <input
+                type="text"
+                class="form-control"
+                id="escuela"
+                required
+                [(ngModel)]="currentPrograma.escuela"
+                name="escuela"
+              />
+            </div>
+            <div class="form-group">
+                <label for="tPrograma">TIPO DE PROGRAMA</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="tPrograma"
+                  required
+                  [(ngModel)]="currentPrograma.tPrograma"
+                  name="tPrograma"
+                />
+            </div>
+          </div>
+      </div>
+    
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" 
+      
+      (click)="updatePrograma()"
+      
+      (click)="modal.close('Save click')">Guardar</button>
+    </div>
+  </ng-template>
+  
+  <hr>
+  
+  <div class="row">
+    <div class="col-md-3">
+      <h4>Lista Programas</h4>
+      <ul class="list-group">
+        <li 
+          class="list-group-item" 
+          *ngFor="let programaId of programaSet; let i = index" 
+          [class.active]="i == currentIndex"
+          (click)="setActivePrograma(programaId, i)">
+          <div class="col">{{ programaId.escuela }}</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <hr>
+  
+  <div class="card-text">
+    <form #f="ngForm" class="form-inline">
+      <div class="form-group">
+        <label for="codigo">CODIGO:</label>
+        <input [(ngModel)]="idprograma" id="escuela" name="escuela" class="form-control ml-2 mr-2">
+      </div>
+      <button (click)="retrievePrograma(idprograma)" [disabled]="!f?.valid" class="btn btn-primary">Buscar</button>
+    </form>
+      <div class="col-md-6">
+    <div *ngIf="currentPrograma" >
+      <div>
+        <label><strong>CODIGO:</strong></label> {{ currentPrograma.codigo }}
+        <label><strong>ESCUELA</strong></label> {{ currentPrograma.escuela }}
+        <label><strong>TIPO DE PROGRAMA:</strong></label> {{ currentPrograma.tPrograma }}
+      </div>
+    </div>
+    <label><strong></strong></label> {{ msgError }}
+  </div>
+  </div>
+  
